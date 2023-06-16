@@ -10,7 +10,7 @@ jobs:
   build:
       # Runs a single command using the runners shell
       name: CI test build maven 
-      uses: ./.github/workflows/maven.yml
+      uses: ./.github/workflows/buildreuse.yml
       with: 
           path_to_settings: .maven/settings.xml
           path_to_pom: pom.xml
