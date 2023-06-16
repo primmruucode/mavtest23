@@ -32,12 +32,12 @@ jobs:
         java-version: 8
         
     - name: Copy settings.xml
-      run: cp settings.xml $HOME/.m2/settings.xml
+      run: cp ${{ inputs.path_to_settings }} $HOME/.m2/settings.xml
     
     - name: check settings.xml 2
       run: cat $HOME/.m2/settings.xml
     - name: Build with Maven
-      run: mvn -B package --file path_to_pom
+      run: mvn -B package --file ${{ inputs.path_to_pom }}
       
     - name: Stamp artifact file name with commit hash
       run: |
