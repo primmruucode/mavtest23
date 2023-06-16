@@ -56,6 +56,7 @@ jobs:
         USERNAME: ${{ secrets.anypoint_platform_username }}
         PASSWORD: ${{ secrets.anypoint_platform_password }}
         KEY: ${{ secrets.decryption_key }}
+      run: echo "god"
      # run: |
      #   artifactName=$(ls *.jar | head -1)
      #   mvn deploy -DmuleDeploy \
