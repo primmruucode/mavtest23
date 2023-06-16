@@ -1,8 +1,17 @@
 name: Build and Deploy to Sandbox
 
 on:
- workflow_dispatch:
-    
+  workflow_call:
+    inputs:
+      path_to_settings:
+        description: path to settings.xml file from root
+        type: string
+        required: true
+      
+      path_to_pom:
+        description: path to pom file
+        type: string
+        required: true
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,8 +30,15 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: 8
+        
+    - name: Copy settings.xml
+      run: cp settings.xml $HOME/.m2/settings.xml
+    
+    - name: check settings.xml 2
+      run: cat $HOME/.m2/settings.xml
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file path_to_pom
+      
     - name: Stamp artifact file name with commit hash
       run: |
         artifactName1=$(ls target/*.jar | head -1)
