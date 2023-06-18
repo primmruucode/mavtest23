@@ -75,7 +75,7 @@ jobs:
       #run: echo "kk"
       run: |
         artifactName=$(ls *.jar | head -1)
-        mvn mule:deploy \
+        mvn clean deploy -DmuleDeploy \
         -Dmule.artifact=$artifactName \
         -Danypoint.username="$USERNAME" \
         -Danypoint.password="$PASSWORD"
