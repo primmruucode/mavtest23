@@ -36,6 +36,33 @@ jobs:
     
     - name: check settings.xml 2
       run: cat $HOME/.m2/settings.xml
+      
+    - name: Clean Test for development branch
+      if: ${{ github.event.ref == 'refs/heads/Dev' }}
+      run: mvn clean test               
+
+    - name: Build and Test for development branch
+      if: ${{ github.event.ref == 'refs/heads/Dev' }}
+      run: mvn clean package      
+
+    - name: Build and Test for release and production
+      if: ${{ github.event.ref != 'refs/heads/Dev' }}
+      run: mvn clean package -DskipTests      
+
+    - name: Publish MUnit Coverage Reports
+      if: ${{ github.event.ref == 'refs/heads/Dev' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: munit-coverage-reports
+        path: target/site/munit/coverage/*
+
+    - name: Publish MUnit Test Reports
+      if: ${{ github.event.ref == 'refs/heads/Dev' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: munit-test-reports
+        path: target/surefire-reports/*
+    
     - name: Build with Maven
       run: mvn -B package --file ${{ inputs.path_to_pom }}
       
