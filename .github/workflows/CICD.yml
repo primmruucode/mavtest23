@@ -16,6 +16,13 @@ jobs:
           path_to_pom: pom.xml
   deploy:
       needs: build
-      #if: ${{ github.event.ref == 'refs/heads/develop' }}
-      name: CD sandbox
-      uses: ./.github/workflows/deployreuse.yml
+      runs-on: ubuntu-latest
+      steps:
+      
+      - name: CD sandbox from Main
+        if: ${{ github.event.ref == 'refs/heads/main' }}
+        uses: ./.github/workflows/deployreuse.yml
+      
+      - name: CD sandbox from Dev
+        if: ${{ github.event.ref == 'refs/heads/Dev' }}
+        run: echo "dev"
