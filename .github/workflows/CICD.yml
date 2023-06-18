@@ -14,3 +14,7 @@ jobs:
       with: 
           path_to_settings: .maven/settings.xml
           path_to_pom: pom.xml
+  deploy:
+      needs: build
+      name: CD sandbox
+      uses: ./.github/workflows/deployreuse.yml
