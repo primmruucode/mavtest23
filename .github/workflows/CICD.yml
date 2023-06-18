@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
-
 name: CI
+run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
 on:
   workflow_dispatch:
 
@@ -14,3 +14,7 @@ jobs:
       with: 
           path_to_settings: .maven/settings.xml
           path_to_pom: pom.xml
+  deploy:
+      needs: build
+      name: CD sandbox
+      uses: ./.github/workflows/deployreuse.yml
