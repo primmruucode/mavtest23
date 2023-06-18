@@ -16,5 +16,6 @@ jobs:
           path_to_pom: pom.xml
   deploy:
       needs: build
+      #if: ${{ github.event.ref == 'refs/heads/develop' }}
       name: CD sandbox
       uses: ./.github/workflows/deployreuse.yml
