@@ -40,8 +40,8 @@ jobs:
         ANYPOINT_PLATFORM_PASSWORD : ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
         
   deployprod:
+      needs: deploystag
       if: github.event.inputs.choice == 'Prod' 
-      needs: build
       name: CD for production
       uses: ./.github/workflows/deployreuse.yml
       with:
