@@ -15,7 +15,7 @@
 
 		<app.runtime>4.4.0</app.runtime>
 		<mule.maven.plugin.version>3.8.0</mule.maven.plugin.version>
-		<app.name>reim</app.name>
+		<app.name>${env.APP_NAME}</app.name>
 		<env>Sandbox</env>
 		<munit.version>2.3.13</munit.version>
 	</properties>
@@ -38,7 +38,7 @@
             <muleVersion>${app.runtime}</muleVersion>
             <username>${anypoint.userName}</username>
             <password>${anypoint.password}</password>
-            <applicationName>${app.name}</applicationName>
+            <applicationName>${env.APP_NAME}</applicationName>
             <environment>${env}</environment>
             <workerType>MICRO</workerType>
             <region>ap-southeast-1</region>
