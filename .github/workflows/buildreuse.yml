@@ -12,6 +12,11 @@ on:
         description: path to pom file
         type: string
         required: true
+    secrets:
+      ANYPOINT_PLATFORM_USERNAME:
+        required: true    
+      ANYPOINT_PLATFORM_PASSWORD:
+        required: true
 jobs:
   build:
     runs-on: ubuntu-latest
