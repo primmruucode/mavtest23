@@ -42,7 +42,7 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: artifacts
-    - name: Deploy to Sandbox
+    - name: Deploy to Sandbox ${{ github.event.ref }} branch
       env:
         USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
         PASSWORD: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
@@ -53,4 +53,8 @@ jobs:
         mvn clean deploy -DmuleDeploy \
         -Dmule.artifact=$artifactName \
         -Danypoint.username="$USERNAME" \
-        -Danypoint.password="$PASSWORD"
+        -Danypoint.password="$PASSWORD" \
+        -U -V -e -B -DskipTests \
+        -Dcloudhub.workerType=${{ inputs.CLOUDHUB_WORKER_TYPE}} \
+        -Dcloudhub.workers=${{ inputs.CLOUDHUB_WORKERS}} \
+        -Dcloudhub.region=${{ inputs.CLOUDHUB_REGION}} 
