@@ -21,7 +21,7 @@ jobs:
         
   deployqa:
       needs: build
-      name: CD for staging
+      name: CD for qa
       uses: ./.github/workflows/deployreuse.yml
       with:
         CLOUDHUB_ENVIRONMENT: "qa-01"    
@@ -35,8 +35,7 @@ jobs:
         
   deploydev:
       needs: build
-      if: github.event.inputs.choice == 'Prod' 
-      name: CD for production
+      name: CD for dev
       uses: ./.github/workflows/deployreuse.yml
       with:
         CLOUDHUB_ENVIRONMENT: "dev-01"    
