@@ -47,7 +47,7 @@ jobs:
         name: artifacts
     
     - name: Set up environment variable
-      run: echo "APP_NAME=${{ inputs.APP_NAME }}-${{ github.event.ref }}" >> $GITHUB_ENV
+      run: echo "APP_NAME=${{ inputs.APP_NAME }}" >> $GITHUB_ENV
     
     - name: Deploy to Sandbox ${{ github.event.ref }} branch
       env:
