@@ -20,7 +20,10 @@ on:
         type: string                
       HTTP_PRIVATE_PORT:
         required: false
-        type: string                        
+        type: string
+      APP_NAME:
+        required: false
+        type: string  
     secrets:
       ANYPOINT_PLATFORM_USERNAME:
         required: true    
@@ -57,4 +60,5 @@ jobs:
         -U -V -e -B -DskipTests \
         -Dcloudhub.workerType=${{ inputs.CLOUDHUB_WORKER_TYPE}} \
         -Dcloudhub.workers=${{ inputs.CLOUDHUB_WORKERS}} \
-        -Dcloudhub.region=${{ inputs.CLOUDHUB_REGION}} 
+        -Dcloudhub.region=${{ inputs.CLOUDHUB_REGION}} \
+        -Dapplication.name=${{ inputs.APP_NAME}}-${{ github.event.ref }}
