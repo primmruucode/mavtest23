@@ -45,6 +45,10 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: artifacts
+    
+    - name: Set up environment variable
+      run: echo "APP_NAME=${{ inputs.APP_NAME }}-${{ github.event.ref }}" >> $GITHUB_ENV
+    
     - name: Deploy to Sandbox ${{ github.event.ref }} branch
       env:
         USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
