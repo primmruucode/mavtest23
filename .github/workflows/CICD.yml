@@ -3,6 +3,13 @@ name: CI
 run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
 on:
   workflow_dispatch:
+    inputs:
+      choice:
+        type: choice
+        description: Which ENV u wish to deploy
+        options:
+        - Prod
+        - Staging
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -18,13 +25,32 @@ jobs:
         ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}        
         ANYPOINT_PLATFORM_PASSWORD : ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
         
-  deploy:
+  deploystag:
       needs: build
-      name: CD sandbox from Main
+      name: CD for staging
       uses: ./.github/workflows/deployreuse.yml
+      with:
+        CLOUDHUB_ENVIRONMENT: "uat-01"    
+        CLOUDHUB_WORKERS: "1"
+        CLOUDHUB_WORKER_TYPE: "MICRO"
+        CLOUDHUB_REGION: "ca-central-1"
       secrets:
         ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}        
         ANYPOINT_PLATFORM_PASSWORD : ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
+        
+  deployprod:
+      needs: build
+      name: CD for production
+      uses: ./.github/workflows/deployreuse.yml
+      with:
+        CLOUDHUB_ENVIRONMENT: "prod-01"    
+        CLOUDHUB_WORKERS: "1"
+        CLOUDHUB_WORKER_TYPE: "MICRO"
+        CLOUDHUB_REGION: "ca-central-1"
+      secrets:
+        ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}        
+        ANYPOINT_PLATFORM_PASSWORD : ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
+      
       
   deployer:         
       runs-on: ubuntu-latest
