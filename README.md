@@ -21,6 +21,11 @@
  2. ANYPOINT_PLATFORM_USERNAME
  3. DECRYPTION_KEY
 
+### Workflows
+there are 3 workflows
+1. **CICD** this is a main workflows to config
+2. **CI** reuseable workflow for CI (test build snapshot)
+3. **CD** reuseable workflow for CD (deployment)
 > **Note**
 > 
 > This is a simple Mule application to test. Please update the `app.name` and `env` properties from the `pom.xml` to your own.
