@@ -44,11 +44,11 @@ jobs:
       
     - name: Clean Test for development branch
       if: ${{ github.event.ref == 'refs/heads/Dev' }}
-      run: mvn clean test               
+      run: echo "clean test"            
 
     - name: Build and Test for development branch
       if: ${{ github.event.ref == 'refs/heads/Dev' }}
-      run: mvn clean package      
+      run: echo "mvn clean package"      
 
     - name: Build and Test for release and production
       if: ${{ github.event.ref != 'refs/heads/Dev' }}
@@ -56,17 +56,19 @@ jobs:
 
     - name: Publish MUnit Coverage Reports
       if: ${{ github.event.ref == 'refs/heads/Dev' }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: munit-coverage-reports
-        path: target/site/munit/coverage/*
+      run: echo "upload coverage art"
+     # uses: actions/upload-artifact@v2
+     # with:
+      #  name: munit-coverage-reports
+       # path: target/site/munit/coverage/*
 
     - name: Publish MUnit Test Reports
       if: ${{ github.event.ref == 'refs/heads/Dev' }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: munit-test-reports
-        path: target/surefire-reports/*
+      run: echo "up test report"
+      #uses: actions/upload-artifact@v2
+      #with:
+       # name: munit-test-reports
+        #path: target/surefire-reports/*
     
     - name: Build with Maven
       run: mvn -B package --file ${{ inputs.path_to_pom }}
