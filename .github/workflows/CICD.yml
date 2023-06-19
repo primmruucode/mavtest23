@@ -14,13 +14,21 @@ jobs:
       with: 
           path_to_settings: .maven/settings.xml
           path_to_pom: pom.xml
+      secrets:
+        CLOUDHUB_USERNAME: ${{ secrets.CLOUDHUB_USERNAME }}        
+        CLOUDHUB_PASSWORD : ${{ secrets.CLOUDHUB_PASSWORD }}
+        
   deploy:
       needs: build
+      name: CD sandbox from Main
+      uses: ./.github/workflows/deployreuse.yml
+      
+  deployer:         
       runs-on: ubuntu-latest
       steps:  
       - name: CD sandbox from Main
         if: ${{ github.event.ref == 'refs/heads/main' }}
-        uses: ./.github/workflows/deployreuse.yml
+        run: echo "main"
       
       - name: CD sandbox from Dev
         if: ${{ github.event.ref == 'refs/heads/Dev' }}
