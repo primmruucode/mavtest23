@@ -22,6 +22,9 @@ jobs:
       needs: build
       name: CD sandbox from Main
       uses: ./.github/workflows/deployreuse.yml
+      secrets:
+        ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}        
+        ANYPOINT_PLATFORM_PASSWORD : ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
       
   deployer:         
       runs-on: ubuntu-latest
