@@ -27,3 +27,7 @@ jobs:
       - name: CD sandbox from Dev
         if: ${{ github.event.ref == 'refs/heads/Dev' }}
         run: echo "dev"
+        
+      - name: CD sandbox from UAT
+        if: ${{ github.event.ref == 'refs/heads/UAT' }}
+        run: echo "uat"
