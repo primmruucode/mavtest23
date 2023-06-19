@@ -34,6 +34,7 @@ jobs:
         CLOUDHUB_WORKERS: "1"
         CLOUDHUB_WORKER_TYPE: "MICRO"
         CLOUDHUB_REGION: "ca-central-1"
+        APP_NAME: "UAT-01"
       secrets:
         ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}        
         ANYPOINT_PLATFORM_PASSWORD : ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
@@ -48,6 +49,7 @@ jobs:
         CLOUDHUB_WORKERS: "1"
         CLOUDHUB_WORKER_TYPE: "MICRO"
         CLOUDHUB_REGION: "ca-central-1"
+        APP_NAME: "Prod-01"
       secrets:
         ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}        
         ANYPOINT_PLATFORM_PASSWORD : ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
