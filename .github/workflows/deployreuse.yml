@@ -2,6 +2,33 @@ name: Deploy to Sandbox
 
 on:
   workflow_call:
+    inputs:
+      CLOUDHUB_ENVIRONMENT:
+        required: false
+        type: string
+      GITHUB_ENVIRONMENT:
+        required: false
+        type: string                    
+      CLOUDHUB_WORKERS:
+        required: false
+        type: string
+      CLOUDHUB_WORKER_TYPE:
+        required: false
+        type: string                
+      CLOUDHUB_REGION:
+        required: false
+        type: string                
+      HTTP_PRIVATE_PORT:
+        required: false
+        type: string
+      APP_NAME:
+        required: false
+        type: string  
+    secrets:
+      ANYPOINT_PLATFORM_USERNAME:
+        required: true    
+      ANYPOINT_PLATFORM_PASSWORD:
+        required: true
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -18,10 +45,14 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: artifacts
-    - name: Deploy to Sandbox
+    
+    - name: Set up environment variable
+      run: echo "APP_NAME=${{ inputs.APP_NAME }}" >> $GITHUB_ENV
+    
+    - name: Deploy to Sandbox ${{ github.event.ref }} branch
       env:
-        USERNAME: ${{ secrets.anypoint_platform_username }}
-        PASSWORD: ${{ secrets.anypoint_platform_password }}
+        USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
+        PASSWORD: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
        # KEY: ${{ secrets.decryption_key }}
       #run: echo "kk"
       run: |
@@ -29,4 +60,9 @@ jobs:
         mvn clean deploy -DmuleDeploy \
         -Dmule.artifact=$artifactName \
         -Danypoint.username="$USERNAME" \
-        -Danypoint.password="$PASSWORD"
+        -Danypoint.password="$PASSWORD" \
+        -U -V -e -B -DskipTests \
+        -Dcloudhub.workerType=${{ inputs.CLOUDHUB_WORKER_TYPE}} \
+        -Dcloudhub.workers=${{ inputs.CLOUDHUB_WORKERS}} \
+        -Dcloudhub.region=${{ inputs.CLOUDHUB_REGION}} \
+        -Dapplication.name=${{ inputs.APP_NAME}}-${{ github.event.ref }}

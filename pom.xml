@@ -15,7 +15,7 @@
 
 		<app.runtime>4.4.0</app.runtime>
 		<mule.maven.plugin.version>3.8.0</mule.maven.plugin.version>
-		<app.name>reim</app.name>
+		<app.name>${env.APP_NAME}</app.name>
 		<env>Sandbox</env>
 		<munit.version>2.3.13</munit.version>
 	</properties>
@@ -28,32 +28,6 @@
         <version>3.0.0</version>
       </plugin>
       <plugin>
-				<groupId>com.mulesoft.munit.tools</groupId>
-				<artifactId>munit-maven-plugin</artifactId>
-				<version>2.2.5</version>
-				<executions>
-					<execution>
-						<id>test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>test</goal>
-							<goal>coverage-report</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<coverage>
-						<runCoverage>true</runCoverage>
-						<formats>
-							<format>html</format>
-						</formats>
-					</coverage>
-					<ignoreFiles>
-						<ignoreFile>global-error-handlers.xml</ignoreFile>
-					</ignoreFiles>
-				</configuration>
-			</plugin>	
-      <plugin>
         <groupId>org.mule.tools.maven</groupId>
         <artifactId>mule-maven-plugin</artifactId>
         <version>${mule.maven.plugin.version}</version>
@@ -62,9 +36,9 @@
           <cloudHubDeployment>
             <uri>https://anypoint.mulesoft.com</uri>
             <muleVersion>${app.runtime}</muleVersion>
-            <username>kourim2570</username>
-            <password>1538225As</password>
-            <applicationName>${app.name}</applicationName>
+            <username>${anypoint.userName}</username>
+            <password>${anypoint.password}</password>
+            <applicationName>${env.APP_NAME}</applicationName>
             <environment>${env}</environment>
             <workerType>MICRO</workerType>
             <region>ap-southeast-1</region>

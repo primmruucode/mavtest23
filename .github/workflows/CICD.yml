@@ -3,6 +3,13 @@ name: CI
 run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
 on:
   workflow_dispatch:
+    inputs:
+      choice:
+        type: choice
+        description: Which ENV u wish to deploy
+        options:
+        - Prod
+        - Staging
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -14,16 +21,61 @@ jobs:
       with: 
           path_to_settings: .maven/settings.xml
           path_to_pom: pom.xml
-  deploy:
+      secrets:
+        ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}        
+        ANYPOINT_PLATFORM_PASSWORD : ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
+        
+  deploystag:
       needs: build
-      runs-on: ubuntu-latest
-      steps:
+      name: CD for staging
+      uses: ./.github/workflows/deployreuse.yml
+      with:
+        CLOUDHUB_ENVIRONMENT: "uat-01"    
+        CLOUDHUB_WORKERS: "1"
+        CLOUDHUB_WORKER_TYPE: "MICRO"
+        CLOUDHUB_REGION: "ca-central-1"
+        APP_NAME: "UAT-01"
+      secrets:
+        ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}        
+        ANYPOINT_PLATFORM_PASSWORD : ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
+        
+  deployprod:
+      needs: deploystag
+      if: github.event.inputs.choice == 'Prod' 
+      name: CD for production
+      uses: ./.github/workflows/deployreuse.yml
+      with:
+        CLOUDHUB_ENVIRONMENT: "prod-01"    
+        CLOUDHUB_WORKERS: "1"
+        CLOUDHUB_WORKER_TYPE: "MICRO"
+        CLOUDHUB_REGION: "ca-central-1"
+        APP_NAME: "Prod-01"
+      secrets:
+        ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}        
+        ANYPOINT_PLATFORM_PASSWORD : ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
       
+      
+  deployer:         
+      runs-on: ubuntu-latest
+      steps:  
       - name: CD sandbox from Main
         if: ${{ github.event.ref == 'refs/heads/main' }}
-        run: echo "deffm"
-        #uses: ./.github/workflows/deployreuse.yml
+        run: echo "main"
       
       - name: CD sandbox from Dev
         if: ${{ github.event.ref == 'refs/heads/Dev' }}
         run: echo "dev"
+        
+      - name: CD sandbox from UAT
+        if: ${{ github.event.ref == 'refs/heads/UAT' }}
+        uses: ./.github/workflows/deployreuse.yml
+        with:
+          CLOUDHUB_ENVIRONMENT: "prod-01"
+          GITHUB_ENVIRONMENT: "prod"      
+          CLOUDHUB_WORKERS: "1"
+          CLOUDHUB_WORKER_TYPE: "MICRO"
+          CLOUDHUB_REGION: "ca-central-1"
+          HTTP_PRIVATE_PORT: "8091"      
+        #secrets:
+         # CLOUDHUB_USERNAME: ${{ secrets.CLOUDHUB_USERNAME }}        
+          #CLOUDHUB_PASSWORD : ${{ secrets.CLOUDHUB_PASSWORD }}
