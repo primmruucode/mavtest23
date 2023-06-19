@@ -1,12 +1,12 @@
 # GitHub actions CI/CD pipeline for MuleSoft 
 ### Branch Management
-  **Main branch** is for Staging and Production which you need to manually click to run the workflow. It will promt you with an input to select which enviroment you need to deploy to 
-  1. **prod** (Deploy main branch to Staging and Production ENV)
-  2. **stag** (Only deploy to staging)
+The **Main branch** is used for Staging and Production environments. To run the workflow, you need to manually click on it. You will be prompted to select the environment you want to deploy to: 
+  1. **prod**: Deploys the main branch to Staging and Production environments.
+  2. **stag**: Deploys only to the Staging environment.
 
-     keep in mind that this branch will not do the testing and will deploy automaticly after you run the workflow
+     Please note that this branch does not perform testing and will automatically deploy after running the workflow.
   
-  **Dev branch** is for QA and Developer enviroment this branch will automaticly test-log-build-deploy after PR, Merge, and CRON job 
+The **Dev branch** is intended for QA and Developer environments. This branch automatically executes tests, logs, builds, and deploys after a Pull Request (PR), Merge, or Cron job.
 
 ### Secrets and Varaibles
 #### Varaibles for deployment
@@ -22,10 +22,11 @@
  3. DECRYPTION_KEY
 
 ### Workflows
-there are 3 workflows
-1. **CICD** this is a main workflows to config
-2. **CI** reuseable workflow for CI (test build snapshot)
-3. **CD** reuseable workflow for CD (deployment)
+There are 3 workflows available:
+1. **CICD** this is a main workflows to config.
+2. **CI** reuseable workflow for CI (test build snapshot).
+3. **CD** reuseable workflow for CD (deployment).
+   
 > **Note**
 > 
 > This is a simple Mule application for testing only.
