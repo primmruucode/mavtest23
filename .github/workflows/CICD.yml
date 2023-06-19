@@ -15,8 +15,8 @@ jobs:
           path_to_settings: .maven/settings.xml
           path_to_pom: pom.xml
       secrets:
-        CLOUDHUB_USERNAME: ${{ secrets.CLOUDHUB_USERNAME }}        
-        CLOUDHUB_PASSWORD : ${{ secrets.CLOUDHUB_PASSWORD }}
+        ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}        
+        ANYPOINT_PLATFORM_PASSWORD : ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
         
   deploy:
       needs: build
