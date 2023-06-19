@@ -20,8 +20,7 @@ jobs:
       steps:  
       - name: CD sandbox from Main
         if: ${{ github.event.ref == 'refs/heads/main' }}
-        run: echo "deffm"
-        #uses: ./.github/workflows/deployreuse.yml
+        uses: ./.github/workflows/deployreuse.yml
       
       - name: CD sandbox from Dev
         if: ${{ github.event.ref == 'refs/heads/Dev' }}
