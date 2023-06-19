@@ -8,7 +8,18 @@
   
   **Dev branch** is for QA and Developer enviroment this branch will automaticly test-log-build-deploy after PR, Merge, and CRON job 
 
-#### Var
+### Secrets and Varaibles
+#### Varaibles for deployment
+ 1. CLOUDHUB_ENVIRONMENT: "prod-01"
+ 2. GITHUB_ENVIRONMENT: "prod"
+ 3. CLOUDHUB_WORKERS: "1"
+ 4. CLOUDHUB_WORKER_TYPE: "MICRO"
+ 5. CLOUDHUB_REGION: "ca-central-1"
+ 6. HTTP_PRIVATE_PORT: "8091"
+#### Secrets
+ 1. ANYPOINT_PLATFORM_PASSWORD
+ 2. ANYPOINT_PLATFORM_USERNAME
+ 3. DECRYPTION_KEY
 
 > **Note**
 > 
